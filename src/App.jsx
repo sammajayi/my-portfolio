@@ -5,7 +5,6 @@ import About from "./pages/About";
 import Contact from "./pages/Contact";
 import RotatingText from "./components/RotatingText";
 import Skills from "./pages/Skills";
-
 import "./App.css";
 
 function App() {
@@ -15,7 +14,7 @@ function App() {
         <Header />
         <div>
           <h1 className="text-4xl font-bold text-center mt-10">Welcome to my portfolio</h1>
-          <button>Let's Talk</button>
+          <button>Let&#39;s Talk</button>
         </div>
 
         <RotatingText />

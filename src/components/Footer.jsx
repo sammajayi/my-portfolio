@@ -1,4 +1,4 @@
-import logo from "../assets/images/my-logo-2.png";
+import logo from "/assets/images/my-logo-2.png";
 
 const Footer = () => {
   return (
@@ -17,7 +17,7 @@ const Footer = () => {
           className="hover:text-gray-200 cursor-pointer"
         >
           <img
-            src="./src/assets/images/social-icons/github-fill.svg"
+            src="./assets/images/social-icons/github-fill.svg"
             alt="github-icon"
             className="w-9 h-9"
           />
@@ -30,7 +30,7 @@ const Footer = () => {
           className="hover:text-gray-200 cursor-pointer"
         >
           <img
-            src="./src/assets/images/social-icons/linkedin-box-fill.svg"
+            src="./assets/images/social-icons/linkedin-box-fill.svg"
             alt="linkedin-icon"
             className="w-9 h-9"
           />
@@ -41,7 +41,7 @@ const Footer = () => {
           className="hover:text-gray-200 cursor-pointer"
         >
           <img
-            src="./src/assets/images/social-icons/mail-fill.svg"
+            src="./assets/images/social-icons/mail-fill.svg"
             alt="mail-icon"
             className="w-9 h-9"
           />
@@ -54,7 +54,7 @@ const Footer = () => {
           className="hover:text-gray-200 cursor-pointer"
         >
           <img
-            src="./src/assets/images/social-icons/twitter-x-line.svg"
+            src="./assets/images/social-icons/twitter-x-line.svg"
             alt="icon"
             className="w-9 h-9"
           />

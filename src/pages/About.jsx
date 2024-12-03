@@ -20,8 +20,8 @@ const About = () => {
           <div className="w-[20rem] h-[10] ">
             <img
               className="rounded-full"
-              src="./src/assets/images/my-image.png"
-              alt=""
+              src="/assets/images/my-image.png"
+              alt="a picture of myself smiling"
             />
           </div>
         </div>
