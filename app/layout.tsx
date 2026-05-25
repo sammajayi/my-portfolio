@@ -7,6 +7,17 @@ export const metadata: Metadata = {
     template: "%s | Samuel Ajayi",
   },
   description: "Personal portfolio of Samuel Ajayi",
+  manifest: "/images/favicon_io/site.webmanifest",
+  themeColor: "#006bb8",
+  icons: {
+    icon: [
+      { url: "/images/favicon_io/favicon-32x32.png", sizes: "32x32", type: "image/png" },
+      { url: "/images/favicon_io/favicon-16x16.png", sizes: "16x16", type: "image/png" },
+      { url: "/images/favicon_io/favicon.ico" },
+    ],
+    apple: "/images/favicon_io/apple-touch-icon.png",
+    shortcut: "/images/my-logo-2.png",
+  },
 };
 
 export default function RootLayout({
