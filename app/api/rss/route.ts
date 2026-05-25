@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { fetchPosts } from "@/lib/fetchPosts";
 
-export const revalidate = 3600;
+export const revalidate = 60;
 
 function escapeXml(value: string) {
   return value

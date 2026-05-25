@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   description: "A unified feed of Samuel Ajayi's posts from Sanity, Hashnode, Dev.to, and Substack.",
 };
 
-export const revalidate = 3600;
+export const revalidate = 60;
 
 export default async function BlogPage() {
   const posts = await fetchPosts();

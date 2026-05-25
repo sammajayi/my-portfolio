@@ -6,7 +6,7 @@ import { schemaTypes } from "./schemas";
 export default defineConfig({
   name: "sammajayi-studio",
   title: "Sammajayi Sanity Studio",
-  projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || "your_project_id",
+  projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || "s8heht9t",
   dataset: process.env.NEXT_PUBLIC_SANITY_DATASET || "production",
   basePath: "/studio",
   plugins: [deskTool(), visionTool()],

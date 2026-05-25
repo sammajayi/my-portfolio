@@ -90,11 +90,11 @@ const fallbackPosts: UnifiedPost[] = [
   },
 ];
 
-const sanityPostQuery = `*[_type == "post"] | order(publishedAt desc) {
+const sanityPostQuery = `*[_type == "post"] | order(coalesce(publishedAt, _createdAt) desc) {
   "id": _id,
   title,
   excerpt,
-  "date": publishedAt,
+  "date": coalesce(publishedAt, _createdAt),
   "slug": slug.current,
   "url": "/blog/" + slug.current,
   "source": "sanity",
@@ -112,7 +112,7 @@ const sanityPostBySlugQuery = `*[_type == "post" && slug.current == $slug][0] {
   "id": _id,
   title,
   excerpt,
-  "date": publishedAt,
+  "date": coalesce(publishedAt, _createdAt),
   "slug": slug.current,
   "url": "/blog/" + slug.current,
   "source": "sanity",

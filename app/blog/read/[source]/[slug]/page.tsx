@@ -17,7 +17,7 @@ const sourceLabels: Record<PostSource, string> = {
   substack: "Substack",
 };
 
-export const revalidate = 3600;
+export const revalidate = 60;
 
 export async function generateMetadata({ params }: ExternalPostPageProps): Promise<Metadata> {
   const { source, slug } = await params;
