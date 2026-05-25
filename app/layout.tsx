@@ -16,7 +16,7 @@ export const metadata: Metadata = {
       { url: "/images/favicon_io/favicon.ico" },
     ],
     apple: "/images/favicon_io/apple-touch-icon.png",
-    shortcut: "/images/sammajayi.svg",
+    shortcut: "/images/samuelajayi.svg",
   },
   openGraph: {
     title: "Samuel Ajayi",
@@ -25,7 +25,7 @@ export const metadata: Metadata = {
     siteName: "Samuel Ajayi",
     images: [
       {
-        url: "https://sammajayi.xyz/images/sammajayi.svg",
+        url: "https://sammajayi.xyz/images/samuelajayi.svg",
         width: 512,
         height: 512,
         alt: "Samuel Ajayi Logo",
@@ -39,7 +39,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Samuel Ajayi",
     description: "Personal portfolio of Samuel Ajayi.",
-    images: ["https://sammajayi.xyz/images/sammajayi.svg"],
+    images: ["https://sammajayi.xyz/images/samuelajayi.svg"],
     creator: "@sammajayi",
   },
 };
