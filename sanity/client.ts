@@ -1,0 +1,17 @@
+import { createClient } from "@sanity/client";
+
+export const sanityConfig = {
+  projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID,
+  dataset: process.env.NEXT_PUBLIC_SANITY_DATASET || "production",
+  apiVersion: "2026-05-24",
+  useCdn: true,
+};
+
+export const sanityClient =
+  sanityConfig.projectId && sanityConfig.dataset
+    ? createClient({
+        ...sanityConfig,
+        token: process.env.SANITY_API_TOKEN,
+        perspective: "published",
+      })
+    : null;

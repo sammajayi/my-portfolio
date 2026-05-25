@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "module": "ESNext",
+    "moduleResolution": "node",
+    "jsx": "react-jsx",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "strict": true,
+    "noEmit": true,
+    "types": ["node"]
+  },
+  "include": ["./**/*"]
+}
