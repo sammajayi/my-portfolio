@@ -29,7 +29,7 @@ export const metadata: Metadata = {
         width: 1000,
         height: 600,
         alt: "Samuel Ajayi Logo",
-        type: "image/png",
+        type: "image/svg+xml",
       },
     ],
     type: "website",
