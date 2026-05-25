@@ -22,7 +22,7 @@ export async function generateMetadata({ params }: PostPageProps): Promise<Metad
 
   const title = post.seo?.title || post.title;
   const description = post.seo?.description || post.excerpt;
-  const url = `https://sammajayi.vercel.app/blog/${slug}`;
+  const url = `https://sammajayi.xyz/blog/${slug}`;
 
   return {
     title,
@@ -43,7 +43,7 @@ export async function generateMetadata({ params }: PostPageProps): Promise<Metad
           ]
         : [
             {
-              url: "https://sammajayi.vercel.app/images/my-logo-2.png",
+              url: "https://sammajayi.xyz/images/my-logo-2.png",
               width: 512,
               height: 512,
               alt: "Samuel Ajayi",
@@ -58,7 +58,7 @@ export async function generateMetadata({ params }: PostPageProps): Promise<Metad
       description,
       images: post.coverImage
         ? [post.coverImage]
-        : ["https://sammajayi.vercel.app/images/my-logo-2.png"],
+        : ["https://sammajayi.xyz/images/my-logo-2.png"],
       creator: "@sammajayi",
     },
   };

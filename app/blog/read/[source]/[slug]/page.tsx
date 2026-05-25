@@ -25,7 +25,7 @@ export async function generateMetadata({ params }: ExternalPostPageProps): Promi
 
   if (!post) return { title: "Post not found" };
 
-  const url = `https://sammajayi.vercel.app/blog/read/${source}/${slug}`;
+  const url = `https://sammajayi.xyz/blog/read/${source}/${slug}`;
 
   return {
     title: post.title,
@@ -46,7 +46,7 @@ export async function generateMetadata({ params }: ExternalPostPageProps): Promi
           ]
         : [
             {
-              url: "https://sammajayi.vercel.app/images/my-logo-2.png",
+              url: "https://sammajayi.xyz/images/my-logo-2.png",
               width: 512,
               height: 512,
               alt: "Samuel Ajayi",
@@ -61,7 +61,7 @@ export async function generateMetadata({ params }: ExternalPostPageProps): Promi
       description: post.excerpt,
       images: post.coverImage
         ? [post.coverImage]
-        : ["https://sammajayi.vercel.app/images/my-logo-2.png"],
+        : ["https://sammajayi.xyz/images/my-logo-2.png"],
       creator: "@sammajayi",
     },
   };

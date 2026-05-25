@@ -5,10 +5,10 @@ import { fetchPosts } from "@/lib/fetchPosts";
 
 export const metadata: Metadata = {
   title: "Blog",
-  description: "A unified feed of Samuel Ajayi's posts from Sanity, Hashnode, Dev.to, and Substack.",
+  description: "A blog about personal notes, software, decentralised systems, leadership, and more",
   openGraph: {
     title: "Blog | Samuel Ajayi",
-    description: "A unified feed of Samuel Ajayi's posts from Sanity, Hashnode, Dev.to, and Substack.",
+    description: "A blog about personal notes, software, decentralised systems, leadership, and more",
     url: "https://sammajayi.xyz/blog",
     type: "website",
     images: [
@@ -23,7 +23,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Blog | Samuel Ajayi",
-    description: "A unified feed of Samuel Ajayi's posts from Sanity, Hashnode, Dev.to, and Substack.",
+    description: "A blog about personal notes, software, decentralised systems, leadership, and more",
     images: ["https://sammajayi.xyz/images/my-logo-2.png"],
   },
 };
