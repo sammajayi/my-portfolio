@@ -6,7 +6,7 @@ export const metadata: Metadata = {
     default: "Samuel Ajayi",
     template: "%s | Samuel Ajayi",
   },
-  description: "Personal portfolio of Samuel Ajayi",
+  description: "Personal portfolio of Samuel Ajayi. Building software, writing notes, and keeping the useful parts easy to find.",
   manifest: "/images/favicon_io/site.webmanifest",
   themeColor: "#006bb8",
   icons: {
@@ -17,6 +17,30 @@ export const metadata: Metadata = {
     ],
     apple: "/images/favicon_io/apple-touch-icon.png",
     shortcut: "/images/my-logo-2.png",
+  },
+  openGraph: {
+    title: "Samuel Ajayi",
+    description: "Personal portfolio of Samuel Ajayi. Building software, writing notes, and keeping the useful parts easy to find.",
+    url: "https://sammajayi.xyz",
+    siteName: "Samuel Ajayi",
+    images: [
+      {
+        url: "https://sammajayi.xyz/images/my-logo-2.png",
+        width: 512,
+        height: 512,
+        alt: "Samuel Ajayi Logo",
+        type: "image/png",
+      },
+    ],
+    type: "website",
+    locale: "en_US",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Samuel Ajayi",
+    description: "Personal portfolio of Samuel Ajayi. Building software, writing notes, and keeping the useful parts easy to find.",
+    images: ["https://sammajayi.xyz/images/my-logo-2.png"],
+    creator: "@sammajayi",
   },
 };
 

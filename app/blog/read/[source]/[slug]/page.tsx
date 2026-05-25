@@ -25,15 +25,44 @@ export async function generateMetadata({ params }: ExternalPostPageProps): Promi
 
   if (!post) return { title: "Post not found" };
 
+  const url = `https://sammajayi.vercel.app/blog/read/${source}/${slug}`;
+
   return {
     title: post.title,
     description: post.excerpt,
     openGraph: {
       title: post.title,
       description: post.excerpt,
-      images: post.coverImage ? [{ url: post.coverImage }] : [],
+      url,
       type: "article",
+      images: post.coverImage
+        ? [
+            {
+              url: post.coverImage,
+              width: 1200,
+              height: 630,
+              alt: post.title,
+            },
+          ]
+        : [
+            {
+              url: "https://sammajayi.vercel.app/images/my-logo-2.png",
+              width: 512,
+              height: 512,
+              alt: "Samuel Ajayi",
+            },
+          ],
       publishedTime: post.date,
+      authors: ["Samuel Ajayi"],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: post.title,
+      description: post.excerpt,
+      images: post.coverImage
+        ? [post.coverImage]
+        : ["https://sammajayi.vercel.app/images/my-logo-2.png"],
+      creator: "@sammajayi",
     },
   };
 }

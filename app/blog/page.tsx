@@ -6,6 +6,26 @@ import { fetchPosts } from "@/lib/fetchPosts";
 export const metadata: Metadata = {
   title: "Blog",
   description: "A unified feed of Samuel Ajayi's posts from Sanity, Hashnode, Dev.to, and Substack.",
+  openGraph: {
+    title: "Blog | Samuel Ajayi",
+    description: "A unified feed of Samuel Ajayi's posts from Sanity, Hashnode, Dev.to, and Substack.",
+    url: "https://sammajayi.xyz/blog",
+    type: "website",
+    images: [
+      {
+        url: "https://sammajayi.xyz/images/my-logo-2.png",
+        width: 512,
+        height: 512,
+        alt: "Samuel Ajayi Blog",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Blog | Samuel Ajayi",
+    description: "A unified feed of Samuel Ajayi's posts from Sanity, Hashnode, Dev.to, and Substack.",
+    images: ["https://sammajayi.xyz/images/my-logo-2.png"],
+  },
 };
 
 export const revalidate = 60;

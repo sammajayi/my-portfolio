@@ -22,6 +22,7 @@ export async function generateMetadata({ params }: PostPageProps): Promise<Metad
 
   const title = post.seo?.title || post.title;
   const description = post.seo?.description || post.excerpt;
+  const url = `https://sammajayi.vercel.app/blog/${slug}`;
 
   return {
     title,
@@ -29,9 +30,36 @@ export async function generateMetadata({ params }: PostPageProps): Promise<Metad
     openGraph: {
       title,
       description,
-      images: post.coverImage ? [{ url: post.coverImage }] : [],
+      url,
       type: "article",
+      images: post.coverImage
+        ? [
+            {
+              url: post.coverImage,
+              width: 1200,
+              height: 630,
+              alt: title,
+            },
+          ]
+        : [
+            {
+              url: "https://sammajayi.vercel.app/images/my-logo-2.png",
+              width: 512,
+              height: 512,
+              alt: "Samuel Ajayi",
+            },
+          ],
       publishedTime: post.date,
+      authors: ["Samuel Ajayi"],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: post.coverImage
+        ? [post.coverImage]
+        : ["https://sammajayi.vercel.app/images/my-logo-2.png"],
+      creator: "@sammajayi",
     },
   };
 }
