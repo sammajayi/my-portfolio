@@ -26,8 +26,8 @@ export const metadata: Metadata = {
     images: [
       {
         url: "https://sammajayi.xyz/images/samuelajayi.svg",
-        width: 512,
-        height: 512,
+        width: 1000,
+        height: 600,
         alt: "Samuel Ajayi Logo",
         type: "image/png",
       },
