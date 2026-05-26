@@ -1,22 +1,23 @@
 import Link from "next/link";
 import { GithubIcon } from "hugeicons-react";
 import ContactForm from "@/app/components/ContactForm";
+import TypewriterEffect from "@/app/components/TypewriterEffect";
 import { projects } from "@/app/data/project";
 
 export default function Home() {
 
   return (
     <div className="mx-auto max-w-5xl px-6 py-12 sm:px-8 space-y-28">
-      {/* 1. Hero Section */}
+      
       <section id="hero" className="py-12 sm:py-20 max-w-3xl">
         <p className="text-sm font-semibold uppercase tracking-[0.22em] text-bright-marine mb-4">
           Samuel Ajayi
         </p>
         <h1 className="text-4xl font-bold tracking-tight text-black sm:text-6xl">
-          Blockchain Developer / Web3 Builder / Product Manager
+          <TypewriterEffect />
         </h1>
         <p className="mt-6 text-lg leading-8 text-muted">
-          I design, engineer, and ship decentralized applications and robust products that solve real-world problems. Confident, lightweight development focused on excellent execution and user experience.
+          I design, engineer, and ship decentralized applications and robust products that solve real-world problems.
         </p>
         <div className="mt-8 flex flex-wrap gap-4">
           <a
@@ -39,10 +40,10 @@ export default function Home() {
         <h2 className="text-2xl font-bold tracking-tight text-black mb-6">About</h2>
         <div className="space-y-4 text-base leading-7 text-muted">
           <p>
-            I am a self-taught developer and final-year Political Science student at the University of Ibadan, based in Lagos, Nigeria. Bridging the gap between code, politics, and product management, I design products with a unique perspective on user behavior and systems architecture.
+            I am a web3 developer who is bridging the gap between code, politics, and product management, I design products with a unique perspective on user behavior and systems architecture.
           </p>
           <p>
-            My core expertise lies in blockchain and Web3 development, product management, growth hacking, and digital marketing. I am passionate about constructing decentralized solutions that empower local and global communities alike.
+            My core expertise lies in blockchain development, product management, growth hacking, and digital marketing. I am passionate about constructing decentralized solutions that empower local and global communities.
           </p>
           <p>
             Through my journey, I have completed the Blockchain Developer program from Rootstock and volunteered at Devconnect in Buenos Aires, Argentina, interacting with global builders and staying on the cutting edge of protocols.
