@@ -10,7 +10,7 @@ const Footer = () => {
 
   return (
     <footer
-      className="mx-auto w-full max-w-5xl px-6 py-10 sm:px-8 flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between"
+      className="mx-auto w-full max-w-5xl px-6 py-10 sm:px-8 flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between items-center justify-center text-center sm:text-left"
       style={{ borderTop: "1px solid var(--alabaster-grey)" }}
     >
       <div className="flex flex-col gap-1 sm:flex-row sm:items-center">
