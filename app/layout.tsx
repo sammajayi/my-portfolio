@@ -27,11 +27,11 @@ export const metadata: Metadata = {
     siteName: "Samuel Ajayi",
     images: [
       {
-        url: "https://sammajayi.xyz/images/samuelajayi.svg",
-        width: 1000,
-        height: 600,
-        alt: "Samuel Ajayi Logo",
-        type: "image/svg+xml",
+        url: "https://sammajayi.xyz/images/samuelajayi.png",
+        width: 1200,
+        height: 630,
+        alt: "Samuel Ajayi",
+        type: "image/png",
       },
     ],
     type: "website",
@@ -41,7 +41,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Samuel Ajayi",
     description: "Personal portfolio of Samuel Ajayi.",
-    images: ["https://sammajayi.xyz/images/samuelajayi.svg"],
+    images: ["https://sammajayi.xyz/images/samuelajayi.png"],
     creator: "@sammajayi",
   },
 };
