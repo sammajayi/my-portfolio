@@ -1,4 +1,5 @@
 import React from "react";
+import { ArrowRight02Icon } from "hugeicons-react";
 
 const Footer = () => {
   const socials = [
@@ -23,9 +24,10 @@ const Footer = () => {
             href={s.href}
             target="_blank"
             rel="noreferrer"
-            className="text-xs text-muted no-underline hover:text-bright-marine transition-colors duration-200"
+            className="inline-flex items-center gap-1.5 text-xs text-muted no-underline hover:text-bright-marine transition-colors duration-200"
           >
             {s.label}
+            <ArrowRight02Icon size={14} className="transform -rotate-45" />
           </a>
         ))}
       </div>

@@ -11,13 +11,13 @@ export default function Home() {
       
       <section id="hero" className="py-12 sm:py-20 max-w-3xl">
         <p className="text-sm font-semibold uppercase tracking-[0.22em] text-bright-marine mb-4">
-          Samuel Ajayi
+          Sammajayi
         </p>
         <h1 className="text-4xl font-bold tracking-tight text-black sm:text-6xl">
           <TypewriterEffect />
         </h1>
         <p className="mt-6 text-lg leading-8 text-muted">
-          I design, engineer, and ship decentralized applications and robust products that solve real-world problems.
+          I design, engineer, and ship decentralised applications and robust products that solve real-world problems.
         </p>
         <div className="mt-8 flex flex-wrap gap-4">
           <a
@@ -40,13 +40,10 @@ export default function Home() {
         <h2 className="text-2xl font-bold tracking-tight text-black mb-6">About</h2>
         <div className="space-y-4 text-base leading-7 text-muted">
           <p>
-            I am a web3 developer who is bridging the gap between code, politics, and product management, I design products with a unique perspective on user behavior and systems architecture.
+            I am a web3 developer bridging the gap between code, marketing, and product management. I design products with a unique perspective on user behavior and systems architecture.
           </p>
           <p>
-            My core expertise lies in blockchain development, product management, growth hacking, and digital marketing. I am passionate about constructing decentralized solutions that empower local and global communities.
-          </p>
-          <p>
-            Through my journey, I have completed the Blockchain Developer program from Rootstock and volunteered at Devconnect in Buenos Aires, Argentina, interacting with global builders and staying on the cutting edge of protocols.
+            My core expertise lies in blockchain development, product management, growth hacking, and digital marketing. I completed the Blockchain Developer program from Rootstock, volunteered at Devconnect in Buenos Aires, and also a fellow of Dev3Pack. I&apos;m bullish on the future of web3 and passionate about building decentralised solutions that empower local and global communities.
           </p>
         </div>
       </section>
