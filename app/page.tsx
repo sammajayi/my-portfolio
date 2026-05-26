@@ -1,28 +1,9 @@
 import Link from "next/link";
 import { GithubIcon } from "hugeicons-react";
 import ContactForm from "@/app/components/ContactForm";
+import { projects } from "@/app/data/project";
 
 export default function Home() {
-  const projects = [
-    {
-      name: "Byro",
-      description: "Decentralized event ticketing platform for Africa. Built with Next.js, Django, Privy, Base blockchain, Supabase, Paystack.",
-      github: "https://github.com/sammajayi/byro",
-      tags: ["Next.js", "Django", "Privy", "Base", "Supabase", "Paystack"],
-    },
-    {
-      name: "RangeZone",
-      description: "Prediction market built during a Rootstock bootcamp. Features an oracle workaround and state machine architecture.",
-      github: "https://github.com/sammajayi/rangezone",
-      tags: ["Solidity", "Rootstock", "State Machine", "Oracle"],
-    },
-    {
-      name: "Nabit",
-      description: "Web3 crypto marketplace.",
-      github: "https://github.com/sammajayi/nabit",
-      tags: ["React", "Web3", "Smart Contracts"],
-    },
-  ];
 
   return (
     <div className="mx-auto max-w-5xl px-6 py-12 sm:px-8 space-y-28">
@@ -97,10 +78,14 @@ export default function Home() {
               </div>
               {project.tags && (
                 <div className="mt-6 flex flex-wrap gap-1.5">
-                  {project.tags.map((tag) => (
+                  {project.tags.map((tag, idx) => (
                     <span
                       key={tag}
-                      className="rounded bg-ghost-white px-2 py-0.5 text-xs font-medium text-muted"
+                      className={`rounded px-2 py-0.5 text-xs font-medium ${
+                        idx % 2 === 0
+                          ? "bg-ghost-white text-muted"
+                          : "bg-bright-marine text-white"
+                      }`}
                     >
                       {tag}
                     </span>

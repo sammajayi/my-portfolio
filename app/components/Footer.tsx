@@ -10,12 +10,11 @@ const Footer = () => {
 
   return (
     <footer
-      className="mx-auto w-full max-w-5xl px-6 py-10 sm:px-8 flex flex-wrap items-center justify-between gap-6"
+      className="mx-auto w-full max-w-5xl px-6 py-10 sm:px-8 flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between"
       style={{ borderTop: "1px solid var(--alabaster-grey)" }}
     >
-      <div className="flex flex-col gap-1">
+      <div className="flex flex-col gap-1 sm:flex-row sm:items-center">
         <span className="text-sm font-medium text-black">© {new Date().getFullYear()} — <a href="https://x.com/sammajayi" className="text-black hover:text-bright-marine">Samuel Ajayi</a></span>
-        
       </div>
       <div className="flex gap-6">
         {socials.map((s) => (
