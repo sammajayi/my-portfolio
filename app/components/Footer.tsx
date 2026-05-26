@@ -14,10 +14,8 @@ const Footer = () => {
       style={{ borderTop: "1px solid var(--alabaster-grey)" }}
     >
       <div className="flex flex-col gap-1">
-        <span className="text-sm font-medium text-black">Samuel Ajayi</span>
-        <span className="text-xs font-mono text-muted">
-          © {new Date().getFullYear()} — built with Next.js & Sanity
-        </span>
+        <span className="text-sm font-medium text-black">© {new Date().getFullYear()} — <a href="https://x.com/sammajayi" className="text-black hover:text-bright-marine">Samuel Ajayi</a></span>
+        
       </div>
       <div className="flex gap-6">
         {socials.map((s) => (
