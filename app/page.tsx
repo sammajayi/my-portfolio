@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { GithubIcon, ArrowRightUp02Icon } from "hugeicons-react";
+import { GithubIcon } from "hugeicons-react";
 import ContactForm from "@/app/components/ContactForm";
 
 export default function Home() {
