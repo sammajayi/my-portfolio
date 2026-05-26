@@ -3,7 +3,7 @@
 ## Current Setup
 
 This project reads Sanity posts from the `post` document type in `sanity/schemas/post.ts`.
-The public blog page is `/blog`, and Sanity-native posts open at `/blog/[slug]`.
+All posts (Sanity and external) open at `/blog/[slug]`.
 
 The current project has the Sanity read client and schema, and it now includes a minimal local Sanity Studio scaffold in `sanity/`.
 
@@ -61,13 +61,7 @@ Clicking the card opens the full in-app page at:
 ```
 
 External posts from Hashnode, Dev.to, and Substack are aggregated into the same feed.
-They now open in an in-app reader route like:
-
-```text
-/blog/read/hashnode/post-slug
-/blog/read/devto/post-slug
-```
-
+They open at the same `/blog/[slug]` pattern, with slugs generated from the post title.
 Each external reader page includes a `View original` link for attribution and fallback.
 
 ## Important Limitation

@@ -2,17 +2,31 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { PortableText } from "@portabletext/react";
 import { notFound } from "next/navigation";
-import { fetchSanityPostBySlug } from "@/lib/fetchPosts";
+import { fetchPostBySlug } from "@/lib/fetchPosts";
 
 type PostPageProps = {
   params: Promise<{ slug: string }>;
+};
+
+const sourceLabels: Record<string, string> = {
+  sanity: "Sanity",
+  hashnode: "Hashnode",
+  devto: "Dev.to",
+  substack: "Substack",
+};
+
+const sourceStyles: Record<string, string> = {
+  sanity: "bg-black text-white",
+  hashnode: "bg-[#2962ff] text-white",
+  devto: "bg-white text-black ring-1 ring-black/10",
+  substack: "bg-[#ff6719] text-white",
 };
 
 export const revalidate = 60;
 
 export async function generateMetadata({ params }: PostPageProps): Promise<Metadata> {
   const { slug } = await params;
-  const post = await fetchSanityPostBySlug(slug);
+  const post = await fetchPostBySlug(slug);
 
   if (!post) {
     return {
@@ -64,22 +78,38 @@ export async function generateMetadata({ params }: PostPageProps): Promise<Metad
   };
 }
 
-export default async function SanityPostPage({ params }: PostPageProps) {
+export default async function PostPage({ params }: PostPageProps) {
   const { slug } = await params;
-  const post = await fetchSanityPostBySlug(slug);
+  const post = await fetchPostBySlug(slug);
 
   if (!post) notFound();
+
+  const isExternal = post.source !== "sanity";
 
   return (
     <main className="min-h-screen bg-ghost-white text-black">
       <article className="mx-auto w-full max-w-3xl px-6 py-12 sm:px-8">
-        <Link href="/blog" className="text-sm font-semibold text-bright-marine hover:text-black">
-          Back to blog
-        </Link>
+        <div className="flex items-center justify-between gap-4">
+          <Link href="/blog" className="text-sm font-semibold text-bright-marine hover:text-black">
+            Back to blog
+          </Link>
+          {isExternal ? (
+            <a
+              href={post.url}
+              target="_blank"
+              rel="noreferrer"
+              className="text-sm font-semibold text-muted hover:text-bright-marine"
+            >
+              View original
+            </a>
+          ) : null}
+        </div>
 
         <header className="mt-10">
           <div className="flex flex-wrap items-center gap-3 text-sm text-muted">
-            <span className="rounded bg-black px-2 py-1 text-xs font-semibold text-white">Sanity</span>
+            <span className={`rounded px-2 py-1 text-xs font-semibold ${sourceStyles[post.source]}`}>
+              {sourceLabels[post.source]}
+            </span>
             <time dateTime={post.date}>
               {new Intl.DateTimeFormat("en", { month: "long", day: "numeric", year: "numeric" }).format(
                 new Date(post.date),
@@ -99,16 +129,39 @@ export default async function SanityPostPage({ params }: PostPageProps) {
           />
         ) : null}
 
-        <div className="prose prose-neutral mt-10 max-w-none">
-          {post.body?.length ? (
+        {post.body?.length ? (
+          <div className="prose prose-neutral mt-10 max-w-none">
             <PortableText value={post.body} />
-          ) : (
+          </div>
+        ) : post.contentHtml ? (
+          <div
+            className="article-content mt-10 max-w-none text-base leading-8 text-black"
+            dangerouslySetInnerHTML={{ __html: post.contentHtml }}
+          />
+        ) : isExternal ? (
+          <div className="mt-10 rounded-lg border border-alabaster-grey bg-white p-6">
+            <h2 className="text-xl font-semibold text-black">Full article not available here yet</h2>
+            <p className="mt-3 text-muted">
+              This source is not exposing a clean full article body to the app. Access the article{" "}
+              <a
+                href={post.url}
+                target="_blank"
+                rel="noreferrer"
+                className="font-semibold text-bright-marine underline"
+              >
+                here
+              </a>
+              .
+            </p>
+          </div>
+        ) : (
+          <div className="prose prose-neutral mt-10 max-w-none">
             <p>
               This sample post is rendering from the local fallback. Add Sanity environment values
               and publish a native post to replace it with CMS content.
             </p>
-          )}
-        </div>
+          </div>
+        )}
       </article>
     </main>
   );

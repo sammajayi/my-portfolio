@@ -199,15 +199,27 @@ function normalizeHashnodeHost(value: string): string {
     .replace(/\/.*$/, "");
 }
 
+function slugify(text: string): string {
+  return text
+    .toLowerCase()
+    .replace(/[^\w\s-]/g, "")
+    .replace(/[\s_]+/g, "-")
+    .replace(/-+/g, "-")
+    .replace(/^-+|-+$/g, "")
+    || "post";
+}
+
 function mapHashnodeNode(node: HashnodeNode): UnifiedPost {
   const postText = `${node.title || ""} ${node.brief || ""} ${node.url || ""}`;
+  const title = cleanText(node.title);
+  const slug = slugify(title) || String(node.slug || node.id);
 
   return {
     id: String(node.id),
-    title: cleanText(node.title),
+    title,
     excerpt: cleanText(node.brief),
     date: normalizeDate(node.publishedAt),
-    slug: String(node.slug || node.id),
+    slug,
     url: String(node.url),
     source: "hashnode",
     tags: normalizeTags(
@@ -221,13 +233,15 @@ function mapHashnodeNode(node: HashnodeNode): UnifiedPost {
 
 function mapHashnodeProfilePost(post: HashnodeProfilePost): UnifiedPost {
   const postText = `${post.title || ""} ${post.brief || ""} ${post.blogUrl || ""}`;
+  const title = cleanText(post.title);
+  const slug = slugify(title) || String(post.slug || post.postId);
 
   return {
     id: String(post.postId || post.blogUrl || post.slug),
-    title: cleanText(post.title),
+    title,
     excerpt: cleanText(post.brief),
     date: normalizeDate(String(post.publishedAt || "").replace(/^\$D/, "")),
-    slug: String(post.slug || post.postId),
+    slug,
     url: String(post.blogUrl),
     source: "hashnode",
     tags: normalizeTags(["Hashnode"], postText),
@@ -386,19 +400,24 @@ async function fetchDevToPosts(): Promise<UnifiedPost[]> {
     if (!response.ok) return [];
     const posts = await response.json();
 
-    return posts.map((post: DevToPost) => ({
-      id: String(post.id),
-      title: cleanText(post.title),
-      excerpt: cleanText(post.description),
-      date: normalizeDate(post.published_at),
-      slug: String(post.slug || post.id),
-      url: String(post.url),
-      source: "devto" as const,
-      tags: normalizeTags(Array.isArray(post.tag_list) ? post.tag_list : [], `${post.title || ""} ${post.description || ""}`),
-      coverImage: post.cover_image || post.social_image,
-      readTime: post.reading_time_minutes ? `${post.reading_time_minutes} min read` : undefined,
-      contentHtml: sanitizeHtml(post.body_html),
-    }));
+    return posts.map((post: DevToPost) => {
+      const title = cleanText(post.title);
+      const slug = slugify(title) || String(post.slug || post.id);
+
+      return {
+        id: String(post.id),
+        title,
+        excerpt: cleanText(post.description),
+        date: normalizeDate(post.published_at),
+        slug,
+        url: String(post.url),
+        source: "devto" as const,
+        tags: normalizeTags(Array.isArray(post.tag_list) ? post.tag_list : [], `${post.title || ""} ${post.description || ""}`),
+        coverImage: post.cover_image || post.social_image,
+        readTime: post.reading_time_minutes ? `${post.reading_time_minutes} min read` : undefined,
+        contentHtml: sanitizeHtml(post.body_html),
+      };
+    });
   } catch (error) {
     console.warn("Failed to fetch Dev.to posts", error);
     return [];
@@ -417,17 +436,22 @@ async function fetchSubstackPosts(): Promise<UnifiedPost[]> {
     const parser = new Parser();
     const feed = await parser.parseString(await response.text());
 
-    return feed.items.map((item) => ({
-      id: String(item.guid || item.link || item.title),
-      title: cleanText(item.title),
-      excerpt: cleanText(item.contentSnippet || item.content).slice(0, 220),
-      date: normalizeDate(item.isoDate || item.pubDate),
-      slug: String(item.guid || item.link || item.title),
-      url: String(item.link),
-      source: "substack" as const,
-      tags: normalizeTags(item.categories || [], `${item.title || ""} ${item.contentSnippet || item.content || ""}`),
-      contentHtml: sanitizeHtml(item.content),
-    }));
+    return feed.items.map((item) => {
+      const title = cleanText(item.title);
+      const slug = slugify(title) || String(item.guid || item.link || item.title);
+
+      return {
+        id: String(item.guid || item.link || item.title),
+        title,
+        excerpt: cleanText(item.contentSnippet || item.content).slice(0, 220),
+        date: normalizeDate(item.isoDate || item.pubDate),
+        slug,
+        url: String(item.link),
+        source: "substack" as const,
+        tags: normalizeTags(item.categories || [], `${item.title || ""} ${item.contentSnippet || item.content || ""}`),
+        contentHtml: sanitizeHtml(item.content),
+      };
+    });
   } catch (error) {
     console.warn("Failed to fetch Substack posts", error);
     return [];
@@ -446,20 +470,35 @@ export async function fetchPosts(): Promise<UnifiedPost[]> {
     .flat()
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 
+  const seenSlugs = new Map<string, number>();
+  for (const post of posts) {
+    if (seenSlugs.has(post.slug)) {
+      const count = seenSlugs.get(post.slug)! + 1;
+      seenSlugs.set(post.slug, count);
+      post.slug = `${post.slug}-${count}`;
+    } else {
+      seenSlugs.set(post.slug, 1);
+    }
+  }
+
   return posts.length ? posts : fallbackPosts;
 }
 
-export async function fetchExternalPost(source: PostSource, slug: string): Promise<UnifiedPost | null> {
-  if (source === "sanity") return fetchSanityPostBySlug(slug);
+export async function fetchPostBySlug(slug: string): Promise<UnifiedPost | null> {
+  if (slug === "sample-native-post") return fallbackPosts[0];
+  if (slug === "sample-external-post") return fallbackPosts[1];
+
+  const sanityPost = await fetchSanityPostBySlug(slug);
+  if (sanityPost) return sanityPost;
 
   const posts = await fetchPosts();
-  const post = posts.find((item) => item.source === source && item.slug === slug);
+  const post = posts.find((p) => p.slug === slug);
   if (!post) return null;
 
-  if (source === "devto" && process.env.DEVTO_USERNAME) {
+  if (post.source === "devto" && process.env.DEVTO_USERNAME) {
     try {
       const response = await fetch(
-        `https://dev.to/api/articles/${encodeURIComponent(process.env.DEVTO_USERNAME)}/${encodeURIComponent(slug)}`,
+        `https://dev.to/api/articles/${post.id}`,
         { next: { revalidate: REVALIDATE_SECONDS } },
       );
 

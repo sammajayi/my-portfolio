@@ -42,10 +42,7 @@ function Highlight({ text, query }: { text: string; query?: string }) {
 }
 
 export default function PostCard({ post, query }: PostCardProps) {
-  const href =
-    post.source === "sanity"
-      ? post.url
-      : `/blog/read/${post.source}/${encodeURIComponent(post.slug)}`;
+  const href = `/blog/${encodeURIComponent(post.slug)}`;
   const cardContent = (
     <>
       <div
