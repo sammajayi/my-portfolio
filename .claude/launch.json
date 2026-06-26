@@ -1,0 +1,14 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "sammajayi-dev",
+      "runtimeExecutable": "/bin/bash",
+      "runtimeArgs": [
+        "-c",
+        "export PATH=/usr/local/bin:/Users/apple/.nvm/versions/node/v24.11.1/bin:$PATH && rm -rf .next && node node_modules/.bin/next dev --port 3001"
+      ],
+      "port": 3001
+    }
+  ]
+}

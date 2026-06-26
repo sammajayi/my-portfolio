@@ -2,7 +2,7 @@ import Parser from "rss-parser";
 import type { PortableTextBlock } from "@portabletext/types";
 import { sanityClient } from "@/sanity/client";
 
-export type PostSource = "sanity" | "hashnode" | "devto" | "substack";
+export type PostSource = "sanity" | "hashnode" | "devto" | "substack" | "medium";
 
 export type UnifiedPost = {
   id: string;
@@ -424,6 +424,54 @@ async function fetchDevToPosts(): Promise<UnifiedPost[]> {
   }
 }
 
+function extractFirstImage(html: string): string | undefined {
+  const match = html.match(/<img[^>]+src="([^"]+)"/);
+  return match?.[1];
+}
+
+async function fetchMediumPosts(): Promise<UnifiedPost[]> {
+  const username = process.env.MEDIUM_USERNAME;
+  if (!username) return [];
+
+  try {
+    const handle = username.replace(/^@/, "");
+    const feedUrl = `https://medium.com/feed/@${encodeURIComponent(handle)}`;
+    const response = await fetch(feedUrl, { next: { revalidate: REVALIDATE_SECONDS } });
+    if (!response.ok) return [];
+
+    const parser = new Parser({ customFields: { item: ["content:encoded"] } });
+    const feed = await parser.parseString(await response.text());
+
+    return feed.items.map((item) => {
+      const title = cleanText(item.title);
+      const slug = slugify(title) || String(item.guid || item.link || item.title);
+      const itemRecord = item as Record<string, unknown>;
+      const rawContent = itemRecord["content:encoded"] as string | undefined;
+      const contentHtml = sanitizeHtml(rawContent || item.content || "");
+      const coverImage = extractFirstImage(rawContent || item.content || "");
+
+      return {
+        id: String(item.guid || item.link || item.title),
+        title,
+        excerpt: cleanText(item.contentSnippet || item.content).slice(0, 220),
+        date: normalizeDate(item.isoDate || item.pubDate),
+        slug,
+        url: String(item.link),
+        source: "medium" as const,
+        tags: normalizeTags(
+          item.categories || [],
+          `${item.title || ""} ${item.contentSnippet || item.content || ""}`,
+        ),
+        coverImage,
+        contentHtml,
+      };
+    });
+  } catch (error) {
+    console.warn("Failed to fetch Medium posts", error);
+    return [];
+  }
+}
+
 async function fetchSubstackPosts(): Promise<UnifiedPost[]> {
   const substackUrl = process.env.SUBSTACK_URL;
   if (!substackUrl || process.env.ENABLE_SUBSTACK !== "true") return [];
@@ -464,6 +512,7 @@ export async function fetchPosts(): Promise<UnifiedPost[]> {
     fetchHashnodePosts(),
     fetchDevToPosts(),
     fetchSubstackPosts(),
+    fetchMediumPosts(),
   ]);
 
   const posts = sources

@@ -1,18 +1,19 @@
 @import "tailwindcss";
 
 :root {
-  --black: #000000ff;
-  --bright-marine: #006bb8ff;
-  --alabaster-grey: #e0e1e0ff;
-  --ghost-white: #f6f2f8ff;
-  --white: #ffffffff;
+  /* Dark theme — variable names are semantic to usage, not literal color names */
+  --black: #f0efefff;             /* foreground / primary text (light on dark) */
+  --bright-marine: #4da8ffff;     /* accent — brightened for dark backgrounds */
+  --alabaster-grey: rgba(255, 255, 255, 0.1); /* subtle border */
+  --ghost-white: #0d0d0dff;       /* page background (near-black) */
+  --white: #161616ff;             /* card / surface background */
   --background: var(--ghost-white);
   --foreground: var(--black);
-  --muted: #5d6268;
+  --muted: #a1a1aaff;             /* secondary text */
   --surface: var(--white);
-  --surface-soft: var(--alabaster-grey);
+  --surface-soft: #1f1f1fff;
   --accent: var(--bright-marine);
-  --ring: rgba(0, 107, 184, 0.24);
+  --ring: rgba(77, 168, 255, 0.24);
 }
 
 @theme inline {
@@ -47,7 +48,7 @@ a {
 }
 
 .article-content {
-  color: var(--black);
+  color: var(--foreground);
 }
 
 .article-content > * + * {
@@ -58,7 +59,7 @@ a {
 .article-content h2,
 .article-content h3,
 .article-content h4 {
-  color: var(--black);
+  color: var(--foreground);
   font-weight: 700;
   line-height: 1.2;
 }
@@ -79,7 +80,7 @@ a {
 
 .article-content p,
 .article-content li {
-  color: #2f3439;
+  color: var(--muted);
   line-height: 1.85;
 }
 
@@ -108,8 +109,8 @@ a {
 
 .article-content blockquote {
   border-left: 4px solid var(--bright-marine);
-  background: var(--white);
-  color: #2f3439;
+  background: var(--surface);
+  color: var(--muted);
   padding: 1rem 1.25rem;
 }
 
@@ -124,8 +125,8 @@ a {
 
 .article-content code {
   border-radius: 0.25rem;
-  background: var(--alabaster-grey);
-  color: var(--black);
+  background: var(--surface-soft);
+  color: var(--foreground);
   padding: 0.1rem 0.3rem;
   font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
   font-size: 0.9em;
@@ -157,7 +158,7 @@ a {
 
 .article-content th,
 .article-content td {
-  border: 1px solid var(--alabaster-grey);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   padding: 0.75rem;
   text-align: left;
 }

@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 
 const roles = [
   'Blockchain Developer',
-  'Web3 Builder',
+  'Web3 Advocate',
   'Product Manager',
 ];
 
