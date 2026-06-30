@@ -445,7 +445,7 @@ async function fetchMediumPosts(): Promise<UnifiedPost[]> {
     return feed.items.map((item) => {
       const title = cleanText(item.title);
       const slug = slugify(title) || String(item.guid || item.link || item.title);
-      const itemRecord = item as Record<string, unknown>;
+      const itemRecord = item as unknown as Record<string, unknown>;
       const rawContent = itemRecord["content:encoded"] as string | undefined;
       const contentHtml = sanitizeHtml(rawContent || item.content || "");
       const coverImage = extractFirstImage(rawContent || item.content || "");
