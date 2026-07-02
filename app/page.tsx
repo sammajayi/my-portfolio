@@ -1,11 +1,18 @@
-import { GithubIcon } from "hugeicons-react";
 import TypewriterEffect from "@/app/components/TypewriterEffect";
 import { projects } from "@/app/data/project";
+import { ProjectList } from "@/components/ProjectCard";
+import BlogSection from "@/components/BlogSection";
+import WinsSection from "@/components/WinsSection";
+import { CommandPalette } from "@/components/CommandPalette";
+import { fetchPosts } from "@/lib/fetchPosts";
 
-export default function Home() {
+export const revalidate = 60;
+
+export default async function Home() {
+  const posts = await fetchPosts();
+
   return (
     <div className="mx-auto max-w-2xl px-6 py-12 pb-36 sm:px-8 space-y-24">
-
       {/* Hero */}
       <section id="hero" className="pt-12 sm:pt-20">
         <p className="text-3xl font-bold text-muted mb-2">
@@ -31,10 +38,7 @@ export default function Home() {
             written and published a technical article on the Rootstock blog and
             am currently working on how to break technical stuff into smaller
             bits with my{" "}
-            <a
-              href="/blog"
-              className="text-bright-marine hover:underline"
-            >
+            <a href="/blog" className="text-bright-marine hover:underline">
               blog
             </a>
             .
@@ -49,46 +53,18 @@ export default function Home() {
         <p className="text-xs font-semibold uppercase tracking-widest text-muted mb-6">
           Projects
         </p>
-        <div className="grid gap-4 sm:grid-cols-2">
-          {projects.map((project) => (
-            <div
-              key={project.name}
-              className="flex flex-col justify-between rounded-xl border border-alabaster-grey bg-white p-5 transition-all hover:border-bright-marine/40"
-            >
-              <div>
-                <div className="flex items-start justify-between gap-3 mb-3">
-                  <h3 className="text-sm font-semibold text-black">
-                    {project.name}
-                  </h3>
-                  <a
-                    href={project.github}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="text-muted hover:text-bright-marine transition-colors shrink-0"
-                    aria-label={`${project.name} on GitHub`}
-                  >
-                    <GithubIcon size={16} />
-                  </a>
-                </div>
-                <p className="text-xs text-muted leading-relaxed">
-                  {project.description}
-                </p>
-              </div>
-              {project.tags && (
-                <div className="mt-4 flex flex-wrap gap-1.5">
-                  {project.tags.map((tag) => (
-                    <span
-                      key={tag}
-                      className="rounded-md px-2 py-0.5 text-xs font-medium border border-alabaster-grey text-muted"
-                    >
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-              )}
-            </div>
-          ))}
-        </div>
+        <ProjectList projects={projects} />
+      </section>
+
+      {/* Blog */}
+      <BlogSection posts={posts} />
+
+      {/* Wins */}
+      <WinsSection />
+
+      {/* Command Palette Hint */}
+      <section className="flex justify-center pt-4">
+        <CommandPalette />
       </section>
     </div>
   );

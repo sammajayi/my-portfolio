@@ -1,20 +1,34 @@
-export const projects = [
+export type ProjectLink = {
+  type: "github" | "live";
+  href: string;
+};
+
+export type Project = {
+  name: string;
+  description: string;
+  links: ProjectLink[];
+};
+
+export const projects: Project[] = [
   {
     name: "Byro",
-    description: "Decentralized event ticketing platform for Africa. Built with Next.js, Django, Privy, Base blockchain, Supabase, Paystack.",
-    github: "https://github.com/sammajayi/byro",
-    tags: ["Next.js", "Django", "Privy", "Base", "Supabase", "Paystack"],
+    description: "Event and community management tool. Built with Next.js, Django, Privy, Base blockchain, Supabase, Paystack.",
+    links: [
+      { type: "github", href: "https://github.com/sammajayi/byro" },
+    ],
   },
   {
     name: "RangeZone",
     description: "Prediction market built during a Rootstock bootcamp. Features an oracle workaround and state machine architecture.",
-    github: "https://github.com/sammajayi/rangezone",
-    tags: ["Solidity", "Rootstock", "State Machine", "Oracle"],
+    links: [
+      { type: "github", href: "https://github.com/sammajayi/rangezone" },
+    ],
   },
   {
     name: "Nabit",
     description: "Web3 crypto marketplace.",
-    github: "https://github.com/sammajayi/nabit",
-    tags: ["React", "Web3", "Smart Contracts"],
+    links: [
+      { type: "github", href: "https://github.com/sammajayi/nabit" },
+    ],
   },
 ];

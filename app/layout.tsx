@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Navbar from "./components/Navbar";
+import { TooltipProvider } from "@/components/ui/tooltip";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -53,8 +54,10 @@ export default function RootLayout({
   return (
     <html lang="en" className="h-full antialiased scroll-smooth">
       <body className="min-h-full flex flex-col bg-ghost-white text-black">
-        <Navbar />
-        <main className="flex-1">{children}</main>
+        <TooltipProvider>
+          <Navbar />
+          <main className="flex-1">{children}</main>
+        </TooltipProvider>
       </body>
     </html>
   );
