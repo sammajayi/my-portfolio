@@ -6,6 +6,12 @@ import { fetchPosts } from "@/lib/fetchPosts";
 export const metadata: Metadata = {
   title: "Blog",
   description: "A blog about personal notes, software, decentralised systems, leadership, and more",
+  alternates: {
+    canonical: "/blog",
+    types: {
+      "application/rss+xml": "/api/rss",
+    },
+  },
   openGraph: {
     title: "Blog | Samuel Ajayi",
     description: "A blog about personal notes, software, decentralised systems, leadership, and more",

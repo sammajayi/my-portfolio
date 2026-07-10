@@ -3,6 +3,9 @@ import { Download01Icon, FileAttachmentIcon } from "hugeicons-react";
 export const metadata = {
   title: "Resume",
   description: "Samuel Ajayi's Professional Resume / CV.",
+  alternates: {
+    canonical: "/resume",
+  },
 };
 
 export default function ResumePage() {

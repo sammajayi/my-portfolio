@@ -140,9 +140,23 @@ function sanitizeHtml(value: unknown): string {
     .replace(/<iframe[\s\S]*?<\/iframe>/gi, "")
     .replace(/<object[\s\S]*?<\/object>/gi, "")
     .replace(/<embed[\s\S]*?>/gi, "")
+    .replace(/<img[^>]+src="https:\/\/medium\.com\/_\/stat[^"]*"[^>]*>/gi, "")
     .replace(/\son\w+="[^"]*"/gi, "")
     .replace(/\son\w+='[^']*'/gi, "")
     .replace(/javascript:/gi, "");
+}
+
+function stripLeadingImage(html: string, imageUrl?: string): string {
+  if (!imageUrl) return html;
+  const escapedUrl = imageUrl.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  const leadingFigure = new RegExp(
+    `^\\s*<figure>\\s*<img[^>]*src="${escapedUrl}"[^>]*>\\s*(?:<figcaption>[\\s\\S]*?<\\/figcaption>\\s*)?<\\/figure>`,
+    "i",
+  );
+  if (leadingFigure.test(html)) return html.replace(leadingFigure, "");
+
+  const leadingImg = new RegExp(`^\\s*<img[^>]*src="${escapedUrl}"[^>]*>`, "i");
+  return html.replace(leadingImg, "");
 }
 
 function normalizeDate(value: unknown): string {
@@ -447,8 +461,8 @@ async function fetchMediumPosts(): Promise<UnifiedPost[]> {
       const slug = slugify(title) || String(item.guid || item.link || item.title);
       const itemRecord = item as unknown as Record<string, unknown>;
       const rawContent = itemRecord["content:encoded"] as string | undefined;
-      const contentHtml = sanitizeHtml(rawContent || item.content || "");
       const coverImage = extractFirstImage(rawContent || item.content || "");
+      const contentHtml = stripLeadingImage(sanitizeHtml(rawContent || item.content || ""), coverImage);
 
       return {
         id: String(item.guid || item.link || item.title),

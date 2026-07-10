@@ -13,6 +13,7 @@ const sourceLabels: Record<string, string> = {
   hashnode: "Hashnode",
   devto: "Dev.to",
   substack: "Substack",
+  medium: "Medium",
 };
 
 const sourceStyles: Record<string, string> = {
@@ -20,6 +21,7 @@ const sourceStyles: Record<string, string> = {
   hashnode: "bg-[#2962ff] text-white",
   devto: "bg-white text-black ring-1 ring-black/10",
   substack: "bg-[#ff6719] text-white",
+  medium: "bg-black text-white",
 };
 
 export const revalidate = 60;
@@ -41,6 +43,9 @@ export async function generateMetadata({ params }: PostPageProps): Promise<Metad
   return {
     title,
     description,
+    alternates: {
+      canonical: url,
+    },
     openGraph: {
       title,
       description,
@@ -85,9 +90,39 @@ export default async function PostPage({ params }: PostPageProps) {
   if (!post) notFound();
 
   const isExternal = post.source !== "sanity";
+  const url = `https://sammajayi.xyz/blog/${slug}`;
+
+  const blogPostingJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    headline: post.title,
+    description: post.excerpt,
+    image: post.coverImage ? [post.coverImage] : ["https://sammajayi.xyz/images/my-logo-2.png"],
+    datePublished: post.date,
+    dateModified: post.date,
+    url,
+    mainEntityOfPage: {
+      "@type": "WebPage",
+      "@id": url,
+    },
+    author: {
+      "@type": "Person",
+      name: "Samuel Ajayi",
+      url: "https://sammajayi.xyz",
+    },
+    publisher: {
+      "@type": "Person",
+      name: "Samuel Ajayi",
+      url: "https://sammajayi.xyz",
+    },
+  };
 
   return (
     <main className="min-h-screen bg-ghost-white text-black">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(blogPostingJsonLd) }}
+      />
       <article className="mx-auto w-full max-w-3xl px-6 py-12 sm:px-8">
         <div className="flex items-center justify-between gap-4">
           <Link href="/blog" className="text-sm font-semibold text-bright-marine hover:text-black">
@@ -122,10 +157,11 @@ export default async function PostPage({ params }: PostPageProps) {
         </header>
 
         {post.coverImage ? (
-          <div
-            className="mt-10 aspect-[16/9] rounded-lg bg-alabaster-grey bg-cover bg-center"
-            style={{ backgroundImage: `url(${post.coverImage})` }}
-            aria-hidden="true"
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            src={post.coverImage}
+            alt={post.title}
+            className="mt-10 w-full rounded-lg bg-alabaster-grey"
           />
         ) : null}
 
