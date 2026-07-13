@@ -6,7 +6,7 @@ import "./globals.css";
 const SITE_URL = "https://sammajayi.xyz";
 const SITE_TITLE = "Samuel Ajayi";
 const SITE_DESCRIPTION =
-  "Samuel Ajayi is a Frontend and Smart Contract developer building in DeFi, privacy, and the broader Web3 ecosystem.";
+  "Samuel Ajayi is a software engineer building in DeFi, privacy, and the broader Web3 ecosystem with Solidity, JavaScript, and Rust.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -17,12 +17,26 @@ export const metadata: Metadata = {
   description: SITE_DESCRIPTION,
   keywords: [
     "Samuel Ajayi",
+    "Software Engineer",
     "Frontend Developer",
+    "Frontend Engineer",
+    "Full Stack Developer",
     "Smart Contract Developer",
     "Solidity",
+    "Rust",
+    "Anchor",
+    "JavaScript",
+    "TypeScript",
+    "React",
+    "Next.js",
     "Web3",
     "DeFi",
     "Blockchain Developer",
+    "Ethereum",
+    "Solana",
+    "Stellar",
+    "Logos Network",
+    "Midnight",
   ],
   authors: [{ name: "Samuel Ajayi", url: SITE_URL }],
   creator: "Samuel Ajayi",

@@ -46,7 +46,7 @@ export default function WinsSection() {
 
       <BlurFade delay={BLUR_FADE_DELAY * 16}>
         <div className="flex justify-center mt-6">
-          <Link href="/wins" className="inline-flex items-center gap-1.5 rounded-lg bg-foreground text-background px-4 py-2 text-sm font-medium transition-colors hover:bg-foreground/80">
+          <Link href="/wins" className="inline-flex items-center gap-1.5 rounded-lg bg-bright-marine text-white px-4 py-2 text-sm font-medium transition-colors hover:bg-bright-marine/80">
             View All Wins
             <ArrowRight02Icon size={14} className="transform -rotate-45" />
           </Link>

@@ -23,8 +23,8 @@ export default async function Home() {
         </h1>
         <div className="space-y-4 text-base leading-7 text-muted max-w-lg mt-6">
           <p>
-            I am a Frontend and Smart Contract developer using Solidity,
-            JavaScript, and currently learning Anchor (Rust).
+            I am a software engineer using Solidity, JavaScript, and currently
+            learning Anchor (Rust).
           </p>
           <p>
             My area of focus is in DeFi, Privacy, and the broader Web3

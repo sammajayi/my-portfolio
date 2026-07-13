@@ -26,7 +26,7 @@ export const projects: Project[] = [
   },
   {
     name: "Nabit",
-    description: "Web3 crypto marketplace.",
+    description: "Web3 marketplace on Farcaster and Base App.",
     links: [
       { type: "github", href: "https://github.com/sammajayi/nabit" },
     ],
