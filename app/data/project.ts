@@ -31,4 +31,12 @@ export const projects: Project[] = [
       { type: "github", href: "https://github.com/sammajayi/nabit" },
     ],
   },
+  {
+    name: "Anonymous Guestbook",
+    description: "A public message board where anyone can post, but nobody can tell who posted what.",
+    links: [
+      { type: "github", href: "https://github.com/sammajayi/Anonymous-guestbook" },
+      { type: "live", href: "https://anonymous-guestbook.vercel.app/" },
+    ],
+  },
 ];
