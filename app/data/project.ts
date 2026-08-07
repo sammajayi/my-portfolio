@@ -15,6 +15,7 @@ export const projects: Project[] = [
     description: "Event and community management tool. Built with Next.js, Django, Privy, Base blockchain, Supabase, Paystack.",
     links: [
       { type: "github", href: "https://github.com/sammajayi/byro" },
+      { type: "live", href: "https://usebyro.com" },
     ],
   },
   {
