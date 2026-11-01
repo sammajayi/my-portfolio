@@ -3,7 +3,7 @@ import type { UnifiedPost } from "@/lib/fetchPosts";
 
 const sourceStyles: Record<UnifiedPost["source"], string> = {
   sanity: "bg-black text-white",
-  hashnode: "bg-[#2962ff] text-white",
+  hashnode: "bg-[#5b8aff] text-white",
   devto: "bg-white text-black ring-1 ring-black/10",
   substack: "bg-[#ff6719] text-white",
   medium: "bg-[#000000] text-white ring-1 ring-white/10",
