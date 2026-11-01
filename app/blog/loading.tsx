@@ -1,6 +1,6 @@
 export default function BlogLoading() {
   return (
-    <main className="min-h-screen bg-ghost-white px-6 py-20 sm:px-8">
+    <div role="status" aria-busy="true" aria-label="Loading posts…" className="min-h-screen bg-ghost-white px-6 py-20 sm:px-8">
       <div className="mx-auto max-w-6xl">
         <div className="h-4 w-24 animate-pulse rounded bg-alabaster-grey" />
         <div className="mt-6 h-16 max-w-2xl animate-pulse rounded bg-alabaster-grey" />
@@ -18,6 +18,6 @@ export default function BlogLoading() {
           ))}
         </div>
       </div>
-    </main>
+    </div>
   );
 }

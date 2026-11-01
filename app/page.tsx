@@ -1,3 +1,4 @@
+import Link from "next/link";
 import TypewriterEffect from "@/app/components/TypewriterEffect";
 import { projects } from "@/app/data/project";
 import { ProjectList } from "@/components/ProjectCard";
@@ -38,9 +39,9 @@ export default async function Home() {
             written and published a technical article on the Rootstock blog and
             am currently working on how to break technical stuff into smaller
             bits with my{" "}
-            <a href="/blog" className="text-bright-marine hover:underline">
+            <Link href="/blog" className="text-bright-marine hover:underline">
               blog
-            </a>
+            </Link>
             .
           </p>
           <p>Overall, I am actively learning to stay updated in this Agentic world.</p>

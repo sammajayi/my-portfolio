@@ -16,7 +16,9 @@ export default function WinsPage() {
             <h1 className="text-2xl font-bold tracking-tight text-foreground">Wins</h1>
           </BlurFade>
           <BlurFade delay={BLUR_FADE_DELAY * 2}>
-            <Link href="/" className="text-sm text-muted hover:text-foreground transition-colors">&larr; Back to home</Link>
+            <Link href="/" className="text-sm text-muted hover:text-foreground transition-colors">
+              <span aria-hidden="true">←</span> Back to Home
+            </Link>
           </BlurFade>
         </div>
         <BlurFade delay={BLUR_FADE_DELAY * 3}>
