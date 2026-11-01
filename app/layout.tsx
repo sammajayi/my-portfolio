@@ -92,7 +92,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#006bb8",
+  themeColor: "#0d0d0d",
 };
 
 const personJsonLd = {
@@ -116,15 +116,21 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="h-full antialiased scroll-smooth">
+    <html lang="en" className="h-full antialiased">
       <body className="min-h-full flex flex-col bg-ghost-white text-black">
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
         />
+        <a
+          href="#main"
+          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[200] focus:rounded-lg focus:bg-surface focus:px-4 focus:py-2 focus:text-sm focus:font-medium focus:text-foreground focus:outline-2 focus:outline-bright-marine"
+        >
+          Skip to Content
+        </a>
         <TooltipProvider>
           <Navbar />
-          <main className="flex-1">{children}</main>
+          <main id="main" className="flex-1">{children}</main>
         </TooltipProvider>
       </body>
     </html>

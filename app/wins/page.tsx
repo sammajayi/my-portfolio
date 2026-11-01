@@ -9,7 +9,7 @@ const BLUR_FADE_DELAY = 0.04;
 
 export default function WinsPage() {
   return (
-    <main className="min-h-screen bg-ghost-white text-black">
+    <div className="min-h-screen bg-ghost-white text-black">
       <header className="mx-auto w-full max-w-2xl px-6 pb-6 pt-10 sm:px-8 sm:pt-16">
         <div className="flex justify-between items-center">
           <BlurFade delay={BLUR_FADE_DELAY}>
@@ -48,6 +48,6 @@ export default function WinsPage() {
           ))}
         </div>
       </div>
-    </main>
+    </div>
   );
 }

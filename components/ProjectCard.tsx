@@ -8,8 +8,8 @@ import { motion } from "framer-motion";
 import type { Project, ProjectLink } from "@/app/data/project";
 
 const linkIcons: Record<ProjectLink["type"], React.ReactNode> = {
-  github: <GithubIcon size={14} />,
-  live: <Globe02Icon size={14} />,
+  github: <GithubIcon size={14} aria-hidden="true" />,
+  live: <Globe02Icon size={14} aria-hidden="true" />,
 };
 
 interface ProjectCardProps {
@@ -19,6 +19,7 @@ interface ProjectCardProps {
 
 export function ProjectCard({ project, className }: ProjectCardProps) {
   const [isExpanded, setIsExpanded] = React.useState(false);
+  const panelId = React.useId();
 
   return (
     <div className={cn("flex flex-col group py-3", className)}>
@@ -31,16 +32,21 @@ export function ProjectCard({ project, className }: ProjectCardProps) {
               href={link.href}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-muted hover:text-foreground transition-colors duration-200 p-1"
+              aria-label={`${project.name} ${link.type === "github" ? "source code" : "live site"} (opens in a new tab)`}
+              className="text-muted hover:text-foreground transition-colors duration-200 p-2 rounded focus-visible:outline-2 focus-visible:outline-bright-marine"
             >
               {linkIcons[link.type]}
             </Link>
           ))}
           <button
+            type="button"
             onClick={() => setIsExpanded(!isExpanded)}
-            className="text-muted hover:text-foreground transition-colors duration-200 p-1"
+            aria-expanded={isExpanded}
+            aria-controls={panelId}
+            aria-label={`${isExpanded ? "Hide" : "Show"} details for ${project.name}`}
+            className="text-muted hover:text-foreground transition-colors duration-200 p-2 rounded focus-visible:outline-2 focus-visible:outline-bright-marine"
           >
-            {isExpanded ? <ArrowUp01Icon size={14} /> : <ArrowDown01Icon size={14} />}
+            {isExpanded ? <ArrowUp01Icon size={14} aria-hidden="true" /> : <ArrowDown01Icon size={14} aria-hidden="true" />}
           </button>
         </div>
       </div>
@@ -51,6 +57,8 @@ export function ProjectCard({ project, className }: ProjectCardProps) {
           height: isExpanded ? "auto" : 0,
         }}
         transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+        id={panelId}
+        inert={!isExpanded}
         className="overflow-hidden"
       >
         <p className="text-sm text-muted pt-1">{project.description}</p>
@@ -81,18 +89,20 @@ export function ProjectList({ projects }: ProjectListProps) {
       <div className="flex justify-center mt-4 gap-4">
         {showLoadMore && (
           <button
+            type="button"
             onClick={() => setExpanded(true)}
-            className="text-sm text-muted hover:text-foreground transition-colors"
+            className="text-sm text-muted hover:text-foreground transition-colors rounded focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-bright-marine"
           >
-            Load More <ArrowDown01Icon size={14} className="inline" />
+            Load More <ArrowDown01Icon size={14} className="inline" aria-hidden="true" />
           </button>
         )}
         {expanded && projects.length > 5 && (
           <button
+            type="button"
             onClick={() => setExpanded(false)}
-            className="text-sm text-muted hover:text-foreground transition-colors"
+            className="text-sm text-muted hover:text-foreground transition-colors rounded focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-bright-marine"
           >
-            Show Less <ArrowUp01Icon size={14} className="inline" />
+            Show Less <ArrowUp01Icon size={14} className="inline" aria-hidden="true" />
           </button>
         )}
       </div>

@@ -33,7 +33,7 @@ export default function Navbar() {
   const pathname = usePathname();
 
   return (
-    <div className="pointer-events-none fixed inset-x-0 bottom-0 z-30 mx-auto mb-4 flex origin-bottom h-full max-h-14">
+    <nav aria-label="Primary" className="pointer-events-none fixed inset-x-0 bottom-0 z-30 mx-auto mb-4 flex origin-bottom h-full max-h-14">
       <div className="fixed bottom-0 inset-x-0 h-16 w-full bg-background to-transparent backdrop-blur-lg [-webkit-mask-image:linear-gradient(to_top,black,transparent)]" />
       <Dock className="z-50 pointer-events-auto relative mx-auto flex min-h-full h-full items-center px-1 bg-surface [box-shadow:0_0_0_1px_rgba(0,0,0,.03),0_2px_4px_rgba(0,0,0,.05),0_12px_24px_rgba(0,0,0,.05)] transform-gpu border border-alabaster-grey">
         {navLinks.map(({ label, href, icon: Icon }) => (
@@ -42,13 +42,15 @@ export default function Navbar() {
               <TooltipTrigger asChild>
                 <Link
                   href={href}
-                  className="flex h-10 w-10 items-center justify-center rounded-full transition-colors duration-150"
+                  aria-label={label}
+                  aria-current={pathname === href ? "page" : undefined}
+                  className="flex h-10 w-10 items-center justify-center rounded-full transition-colors duration-150 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-bright-marine"
                   style={{
                     color: pathname === href ? "#ffffff" : "rgba(255,255,255,0.5)",
                     background: pathname === href ? "rgba(255,255,255,0.12)" : undefined,
                   }}
                 >
-                  <Icon size={18} />
+                  <Icon size={18} aria-hidden="true" />
                 </Link>
               </TooltipTrigger>
               <TooltipContent>{label}</TooltipContent>
@@ -62,8 +64,8 @@ export default function Navbar() {
           <DockIcon key={href}>
             <Tooltip>
               <TooltipTrigger asChild>
-                <a href={href} target="_blank" rel="noreferrer" className="flex h-10 w-10 items-center justify-center rounded-full text-muted hover:text-foreground transition-colors duration-150">
-                  <Icon size={18} />
+                <a href={href} target="_blank" rel="noopener noreferrer" aria-label={`${label} (opens in a new tab)`} className="flex h-10 w-10 items-center justify-center rounded-full text-muted hover:text-foreground transition-colors duration-150 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-bright-marine">
+                  <Icon size={18} aria-hidden="true" />
                 </a>
               </TooltipTrigger>
               <TooltipContent>{label}</TooltipContent>
@@ -71,6 +73,6 @@ export default function Navbar() {
           </DockIcon>
         ))}
       </Dock>
-    </div>
+    </nav>
   );
 }

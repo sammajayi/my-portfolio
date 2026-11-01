@@ -40,7 +40,7 @@ export default async function BlogPage() {
   const posts = await fetchPosts();
 
   return (
-    <main className="min-h-screen bg-ghost-white text-black">
+    <div className="min-h-screen bg-ghost-white text-black">
       <header className="mx-auto w-full max-w-6xl px-6 pb-12 pt-10 sm:px-8 sm:pt-16">
         <p className="text-sm font-semibold uppercase tracking-[0.22em] text-bright-marine">Blog</p>
         <h1 className="mt-4 max-w-4xl text-5xl font-semibold leading-tight sm:text-7xl">
@@ -51,6 +51,6 @@ export default async function BlogPage() {
         </p>
       </header>
       <BlogFeed posts={posts} />
-    </main>
+    </div>
   );
 }
