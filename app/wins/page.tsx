@@ -30,20 +30,31 @@ export default function WinsPage() {
         <div className="flex flex-col gap-y-2 border-t border-alabaster-grey pt-4">
           {wins.map((win, id) => (
             <BlurFade key={win.title} delay={BLUR_FADE_DELAY * 4 + id * 0.05}>
-              <Link
-                href={win.link || "#"}
-                target={win.link ? "_blank" : undefined}
-                rel={win.link ? "noreferrer" : undefined}
-                className="group flex items-center justify-between rounded-lg border border-alabaster-grey bg-white p-4 transition-all hover:border-bright-marine/40"
-              >
+              {win.link ? (
+                <a
+                  href={win.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group flex items-center justify-between rounded-lg border border-alabaster-grey bg-white p-4 transition-colors hover:border-bright-marine/40"
+                >
                 <div className="flex items-center gap-3 min-w-0">
                   <h3 className="text-sm font-semibold text-foreground group-hover:text-bright-marine transition-colors truncate">
                     {win.title}
                   </h3>
                   {win.date && <span className="text-xs text-muted shrink-0">{win.date}</span>}
                 </div>
-                <ArrowRight02Icon size={16} className="shrink-0 text-muted group-hover:text-bright-marine transition-all group-hover:translate-x-1" />
-              </Link>
+                <ArrowRight02Icon size={16} aria-hidden="true" className="shrink-0 text-muted group-hover:text-bright-marine transition-transform motion-reduce:transition-none group-hover:translate-x-1" />
+                </a>
+              ) : (
+                <div className="flex items-center justify-between rounded-lg border border-alabaster-grey bg-white p-4">
+                <div className="flex items-center gap-3 min-w-0">
+                  <h3 className="text-sm font-semibold text-foreground transition-colors truncate">
+                    {win.title}
+                  </h3>
+                  {win.date && <span className="text-xs text-muted shrink-0">{win.date}</span>}
+                </div>
+                </div>
+              )}
             </BlurFade>
           ))}
         </div>

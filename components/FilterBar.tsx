@@ -22,7 +22,8 @@ export default function FilterBar({
           <button
             type="button"
             onClick={() => onTagChange("")}
-            className={`rounded-md px-3 py-2 text-sm font-semibold transition ${
+            aria-pressed={!selectedTag}
+            className={`rounded-md px-3 py-2 text-sm font-semibold transition-colors ${
               selectedTag
                 ? "border border-alabaster-grey bg-white text-black hover:border-bright-marine hover:text-bright-marine"
                 : "bg-bright-marine text-white"
@@ -35,7 +36,8 @@ export default function FilterBar({
               key={tag}
               type="button"
               onClick={() => onTagChange(selectedTag === tag ? "" : tag)}
-              className={`rounded-md px-3 py-2 text-sm font-semibold transition ${
+              aria-pressed={selectedTag === tag}
+              className={`rounded-md px-3 py-2 text-sm font-semibold transition-colors ${
                 selectedTag === tag
                   ? "bg-bright-marine text-white"
                   : "border border-alabaster-grey bg-white text-black hover:border-bright-marine hover:text-bright-marine"
@@ -53,11 +55,12 @@ export default function FilterBar({
           <button
             type="button"
             onClick={() => onTagChange("")}
-            className="rounded bg-black px-2 py-1 text-xs font-semibold text-white"
+            aria-label={`Remove filter ${selectedTag}`}
+            className="rounded bg-black px-2 py-1 text-xs font-semibold text-white transition-colors hover:bg-bright-marine"
           >
-            {selectedTag} x
+            {selectedTag} ×
           </button>
-          <button type="button" onClick={onClear} className="text-xs font-semibold text-bright-marine">
+          <button type="button" onClick={onClear} className="rounded text-xs font-semibold text-bright-marine transition-colors hover:underline">
             Clear all
           </button>
         </div>

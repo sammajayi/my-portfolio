@@ -70,7 +70,7 @@ export default function PostCard({ post, query }: PostCardProps) {
         </div>
 
         <div>
-          <h2 className="text-xl font-semibold leading-snug text-black transition group-hover:text-bright-marine">
+          <h2 className="text-xl font-semibold leading-snug text-black transition-colors group-hover:text-bright-marine text-balance">
             <Highlight text={post.title} query={query} />
           </h2>
           <p className="mt-3 line-clamp-3 text-sm leading-6 text-muted">
@@ -93,8 +93,8 @@ export default function PostCard({ post, query }: PostCardProps) {
   );
 
   return (
-    <article className="group overflow-hidden rounded-lg border border-alabaster-grey bg-white shadow-sm transition hover:-translate-y-1 hover:border-bright-marine/40 hover:shadow-xl hover:shadow-black/5">
-      <Link href={href} className="block h-full">
+    <article className="group overflow-hidden rounded-lg border border-alabaster-grey bg-white shadow-sm transition-[transform,border-color,box-shadow] motion-reduce:transition-none motion-reduce:hover:translate-y-0 hover:-translate-y-1 hover:border-bright-marine/40 hover:shadow-xl hover:shadow-black/5">
+      <Link href={href} className="block h-full focus-visible:outline-offset-[-2px]">
         {cardContent}
       </Link>
     </article>

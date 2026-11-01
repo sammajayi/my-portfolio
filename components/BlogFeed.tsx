@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import { useSearchParams } from "next/navigation";
 import type { UnifiedPost } from "@/lib/fetchPosts";
 import FilterBar from "@/components/FilterBar";
 import PostCard from "@/components/PostCard";
@@ -11,9 +12,22 @@ type BlogFeedProps = {
 };
 
 export default function BlogFeed({ posts }: BlogFeedProps) {
-  const [searchInput, setSearchInput] = useState("");
-  const [query, setQuery] = useState("");
-  const [selectedTag, setSelectedTag] = useState("");
+  const params = useSearchParams();
+  const [searchInput, setSearchInput] = useState(params.get("q") ?? "");
+  const [query, setQuery] = useState((params.get("q") ?? "").trim());
+  const [selectedTag, setSelectedTag] = useState(params.get("tag") ?? "");
+
+  // Keep filters in the URL so views can be shared and survive back/forward.
+  useEffect(() => {
+    const next = new URLSearchParams();
+    if (query) next.set("q", query);
+    if (selectedTag) next.set("tag", selectedTag);
+    const qs = next.toString();
+    const url = `${window.location.pathname}${qs ? `?${qs}` : ""}`;
+    if (url !== `${window.location.pathname}${window.location.search}`) {
+      window.history.replaceState(null, "", url);
+    }
+  }, [query, selectedTag]);
 
   useEffect(() => {
     const timer = window.setTimeout(() => setQuery(searchInput.trim()), 300);
@@ -53,6 +67,10 @@ export default function BlogFeed({ posts }: BlogFeedProps) {
           />
         </div>
       </div>
+
+      <p role="status" aria-live="polite" className="sr-only">
+        {filteredPosts.length} {filteredPosts.length === 1 ? "post" : "posts"} found
+      </p>
 
       <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
         {filteredPosts.map((post) => (

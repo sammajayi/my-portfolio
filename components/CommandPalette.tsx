@@ -4,7 +4,6 @@ import * as React from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { createPortal } from "react-dom";
-import { cn } from "@/lib/utils";
 import {
   GithubIcon,
   NewTwitterIcon,
@@ -34,6 +33,8 @@ export function CommandPalette() {
   const [mounted, setMounted] = React.useState(false);
   const [search, setSearch] = React.useState("");
   const inputRef = React.useRef<HTMLInputElement>(null);
+  const triggerRef = React.useRef<HTMLButtonElement>(null);
+  const listRef = React.useRef<HTMLDivElement>(null);
 
   React.useEffect(() => {
     setMounted(true);
@@ -58,10 +59,15 @@ export function CommandPalette() {
   React.useEffect(() => {
     if (open) {
       document.body.style.overflow = "hidden";
-      setTimeout(() => inputRef.current?.focus(), 100);
+      const t = setTimeout(() => inputRef.current?.focus(), 100);
+      return () => {
+        clearTimeout(t);
+        document.body.style.overflow = "";
+      };
     } else {
       document.body.style.overflow = "";
       setSearch("");
+      triggerRef.current?.focus({ preventScroll: true });
     }
     return () => { document.body.style.overflow = ""; };
   }, [open]);
@@ -73,7 +79,7 @@ export function CommandPalette() {
         icon: <Mail01Icon size={18} />,
         label: "Send Email",
         shortcut: "E",
-        action: () => { window.location.href = "mailto:samuelajayi554@gmail.com"; setOpen(false); },
+        action: () => { window.location.assign("mailto:samuelajayi554@gmail.com"); setOpen(false); },
       },
       { icon: <NewTwitterIcon size={18} />, label: "Twitter / X", shortcut: "T", href: "https://twitter.com/sammajayi" },
       { icon: <Linkedin01Icon size={18} />, label: "LinkedIn", shortcut: "L", href: "https://linkedin.com/in/sammajayi" },
@@ -103,12 +109,16 @@ export function CommandPalette() {
   return (
     <>
       <button
+        ref={triggerRef}
+        type="button"
         onClick={() => setOpen(true)}
-        className="inline-flex items-center gap-1.5 text-sm text-muted hover:text-foreground transition-colors"
+        aria-haspopup="dialog"
+        aria-keyshortcuts="Meta+K Control+K"
+        className="inline-flex items-center gap-1.5 rounded text-sm text-muted hover:text-foreground transition-colors"
       >
         Press{" "}
         <kbd className="px-1.5 py-0.5 text-xs bg-surface border border-alabaster-grey rounded font-mono">
-          ⌘ K
+          ⌘&nbsp;K
         </kbd>{" "}
         to get in touch
       </button>
@@ -117,13 +127,31 @@ export function CommandPalette() {
         createPortal(
           <AnimatePresence>
             {open && (
-              <div className="fixed inset-0 z-[100] flex items-start justify-center pt-[20vh]">
+              <div
+                role="dialog"
+                aria-modal="true"
+                aria-label="Command palette"
+                className="fixed inset-0 z-[100] flex items-start justify-center pt-[20vh]"
+                onKeyDown={(e) => {
+                  if (e.key !== "ArrowDown" && e.key !== "ArrowUp") return;
+                  const items = Array.from(
+                    listRef.current?.querySelectorAll<HTMLElement>("[data-palette-item]") ?? [],
+                  );
+                  if (!items.length) return;
+                  e.preventDefault();
+                  const i = items.indexOf(document.activeElement as HTMLElement);
+                  const next = e.key === "ArrowDown" ? i + 1 : i - 1;
+                  if (next < 0) inputRef.current?.focus();
+                  else items[Math.min(next, items.length - 1)].focus();
+                }}
+              >
                 <motion.div
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
                   transition={{ duration: 0.2 }}
                   className="absolute inset-0 bg-ghost-white/80 backdrop-blur-md"
+                  aria-hidden="true"
                   onClick={() => setOpen(false)}
                 />
                 <motion.div
@@ -138,26 +166,29 @@ export function CommandPalette() {
                     <input
                       ref={inputRef}
                       type="text"
-                      placeholder="Type a command or search..."
+                      name="command-search"
+                      aria-label="Search commands"
+                      autoComplete="off"
+                      spellCheck={false}
+                      placeholder="Type a command or search…"
                       className="w-full bg-transparent text-sm border-none outline-none text-foreground placeholder:text-muted py-2 px-0"
                       value={search}
                       onChange={(e) => setSearch(e.target.value)}
-                      autoFocus
                     />
                   </div>
-                  <div className="px-2 pb-4 max-h-[300px] overflow-y-auto">
-                    {filteredGroups.map((group, gi) => (
-                      <div key={gi} className="mt-4 first:mt-0">
+                  <div ref={listRef} className="px-2 pb-4 max-h-[300px] overflow-y-auto overscroll-contain">
+                    {filteredGroups.map((group) => (
+                      <div key={group.title} className="mt-4 first:mt-0">
                         <div className="px-2 mb-2">
                           <div className="text-xs font-semibold uppercase tracking-wider text-muted">{group.title}</div>
                         </div>
-                        {group.items.map((item, ii) => (
-                          <PaletteItem key={ii} {...item} onClose={() => setOpen(false)} />
+                        {group.items.map((item) => (
+                          <PaletteItem key={item.label} {...item} onClose={() => setOpen(false)} />
                         ))}
                       </div>
                     ))}
                     {filteredGroups.length === 0 && (
-                      <div className="py-6 text-center text-muted text-sm">No results found</div>
+                      <div role="status" className="py-6 text-center text-muted text-sm">No results found</div>
                     )}
                   </div>
                 </motion.div>
@@ -171,26 +202,45 @@ export function CommandPalette() {
 }
 
 function PaletteItem({ icon, label, shortcut, href, action, onClose }: CommandItem & { onClose: () => void }) {
+  const isExternal = Boolean(href && /^https?:/.test(href));
+  const className =
+    "flex items-center justify-between w-full px-2 py-2.5 text-sm rounded-lg hover:bg-white/5 focus-visible:bg-white/5 cursor-pointer transition-colors text-left";
   const content = (
-    <div
-      className="flex items-center justify-between w-full px-2 py-2.5 text-sm rounded-lg hover:bg-white/5 cursor-pointer transition-colors"
-      onClick={() => { action?.(); onClose(); }}
-    >
-      <div className="flex items-center gap-3">
-        <div className="flex items-center justify-center text-muted">{icon}</div>
-        <div className="text-foreground">{label}</div>
-      </div>
+    <>
+      <span className="flex items-center gap-3">
+        <span className="flex items-center justify-center text-muted" aria-hidden="true">{icon}</span>
+        <span className="text-foreground">{label}</span>
+      </span>
       {shortcut && (
-        <div className="flex items-center gap-1">
+        <span className="flex items-center gap-1" aria-hidden="true">
           {shortcut.split(" ").map((key, i) => (
-            <React.Fragment key={i}>
-              {i > 0 && <span className="text-muted mx-0.5" />}
-              <kbd className="px-1.5 py-0.5 text-xs bg-white/5 border border-alabaster-grey rounded font-mono text-muted">{key}</kbd>
-            </React.Fragment>
+            <kbd key={i} className="px-1.5 py-0.5 text-xs bg-white/5 border border-alabaster-grey rounded font-mono text-muted">{key}</kbd>
           ))}
-        </div>
+        </span>
       )}
-    </div>
+    </>
   );
-  return href ? <Link href={href} onClick={onClose}>{content}</Link> : content;
+  if (href) {
+    return (
+      <Link
+        href={href}
+        data-palette-item
+        onClick={onClose}
+        className={className}
+        {...(isExternal ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+      >
+        {content}
+      </Link>
+    );
+  }
+  return (
+    <button
+      type="button"
+      data-palette-item
+      onClick={() => { action?.(); onClose(); }}
+      className={className}
+    >
+      {content}
+    </button>
+  );
 }

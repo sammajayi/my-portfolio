@@ -1,5 +1,5 @@
+import { Suspense } from "react";
 import type { Metadata } from "next";
-import Link from "next/link";
 import BlogFeed from "@/components/BlogFeed";
 import { fetchPosts } from "@/lib/fetchPosts";
 
@@ -50,7 +50,9 @@ export default async function BlogPage() {
           Welcome to my blog, a unified feed of my posts from different platforms. Here, I share insights, tutorials, and stories about software development, engineering, and the tech industry. Whether you&apos;re a fellow developer or just curious about the world of coding, there&apos;s something here for everyone. Dive in and explore my latest thoughts and projects!
         </p>
       </header>
-      <BlogFeed posts={posts} />
+      <Suspense fallback={null}>
+        <BlogFeed posts={posts} />
+      </Suspense>
     </div>
   );
 }
